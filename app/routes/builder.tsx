@@ -16,6 +16,7 @@ export default function Builder() {
     PayloadDescription: 'Generated configuration profile',
     PayloadIdentifier: 'com.example.profile',
     PayloadContent: [] as Payload[],
+    ConsentText: '',
   });
 
   const [showAddPayload, setShowAddPayload] = useState(false);
@@ -148,6 +149,27 @@ export default function Builder() {
                   }))
                 }
                 rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="consent-text"
+                className="block text-sm font-medium mb-1 text-gray-700"
+              >
+                Consent Text (Optional)
+              </label>
+              <textarea
+                id="consent-text"
+                value={profile.ConsentText}
+                onChange={(e) =>
+                  setProfile((prev) => ({
+                    ...prev,
+                    ConsentText: e.target.value,
+                  }))
+                }
+                rows={4}
+                placeholder="Text displayed to user before profile installation"
                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>

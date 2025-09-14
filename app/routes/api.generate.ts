@@ -50,7 +50,13 @@ function generateMobileConfig(profile: MobileConfigProfile): string {
   <key>PayloadUUID</key>
   <string>${payloadUUID}</string>
   <key>PayloadVersion</key>
-  <integer>1</integer>
+  <integer>1</integer>${
+    profile.ConsentText
+      ? `
+  <key>ConsentText</key>
+  <string>${profile.ConsentText}</string>`
+      : ''
+  }
 </dict>
 </plist>`;
 }
