@@ -1,0 +1,62 @@
+{
+	"name": "mobileconfig",
+	"sideEffects": false,
+	"type": "module",
+	"scripts": {
+		"build": "remix vite:build",
+		"deploy": "pnpm run build && wrangler pages deploy",
+		"dev": "remix vite:dev",
+		"lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+		"start": "wrangler pages dev ./build/client",
+		"typecheck": "tsc",
+		"typegen": "wrangler types",
+		"preview": "pnpm run build && wrangler pages dev",
+		"cf-typegen": "wrangler types"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"@tailwindcss/oxide",
+			"esbuild",
+			"sharp",
+			"unrs-resolver",
+			"workerd"
+		]
+	},
+	"dependencies": {
+		"@remix-run/cloudflare": "^2.17.0",
+		"@remix-run/cloudflare-pages": "^2.17.0",
+		"@remix-run/react": "^2.17.0",
+		"isbot": "^4.1.0",
+		"lucide-react": "^0.544.0",
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1",
+		"uuid": "^13.0.0",
+		"zod": "^4.1.8"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20240512.0",
+		"@remix-run/dev": "^2.17.0",
+		"@tailwindcss/vite": "^4.1.13",
+		"@types/react": "^19.1.13",
+		"@types/react-dom": "^19.1.9",
+		"@types/uuid": "^10.0.0",
+		"@typescript-eslint/eslint-plugin": "^6.7.4",
+		"@typescript-eslint/parser": "^6.7.4",
+		"eslint": "^8.38.0",
+		"eslint-import-resolver-typescript": "^3.6.1",
+		"eslint-plugin-import": "^2.28.1",
+		"eslint-plugin-jsx-a11y": "^6.7.1",
+		"eslint-plugin-react": "^7.33.2",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"prettier": "^3.6.2",
+		"tailwindcss": "^4.1.13",
+		"typescript": "^5.9.2",
+		"vite": "^7.1.5",
+		"vite-tsconfig-paths": "^5.1.4",
+		"vitest": "^3.2.4",
+		"wrangler": "4.36.0"
+	},
+	"engines": {
+		"node": ">=20.0.0"
+	}
+}
