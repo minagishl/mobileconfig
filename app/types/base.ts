@@ -27,9 +27,8 @@ export interface MobileConfigProfile {
 }
 
 // Payload types will be defined as needed
-export type Payload = BasePayload & {
-  [key: string]: string | boolean | number | string[] | undefined;
-};
+export type Payload = BasePayload &
+  Record<string, string | boolean | number | string[] | undefined>;
 
 export interface Preset {
   id: string;
