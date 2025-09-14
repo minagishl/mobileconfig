@@ -33,7 +33,8 @@ export default function Index() {
             <div>
               <h3 className="font-medium text-gray-900">Create Profile</h3>
               <p className="text-sm text-gray-600">
-                Build a custom configuration profile
+                Build a custom configuration profile with detailed payload
+                settings
               </p>
             </div>
           </div>
@@ -74,9 +75,24 @@ export default function Index() {
         <h2 className="text-lg font-medium mb-4 text-gray-900">
           Supported Payload Types
         </h2>
-        <div className="text-sm text-gray-600">
-          Wi-Fi, VPN, DNS, Email, Exchange, APN, Restrictions, WebClip, CalDAV,
-          CardDAV, LDAP, SCEP, Certificates, Passcode, Single Sign-On
+        <div className="space-y-3">
+          <div>
+            <h3 className="text-sm font-medium text-gray-900 mb-1">
+              Full Configuration Support
+            </h3>
+            <div className="text-sm text-gray-600">
+              Wi-Fi, VPN, DNS, Web Content Filter, Email
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm font-medium text-gray-900 mb-1">
+              Additional Payload Types
+            </h3>
+            <div className="text-sm text-gray-600">
+              Exchange, APN, Restrictions, WebClip, CalDAV, CardDAV, LDAP, SCEP,
+              Certificates, Passcode, Single Sign-On, HTTP Proxy
+            </div>
+          </div>
         </div>
       </div>
     </div>

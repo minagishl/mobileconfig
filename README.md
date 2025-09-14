@@ -4,9 +4,12 @@ A full-stack Remix application for generating Apple mobileconfig configuration p
 
 ## Features
 
-- **Profile Builder**: Create custom configuration profiles with multiple payload types
+- **Advanced Profile Builder**: Create custom configuration profiles with detailed payload settings
+- **Interactive Payload Configuration**: Edit payload settings with dynamic forms and validation
 - **Pre-configured Presets**: Quick-start templates for common use cases
-- **Comprehensive Payload Support**: Support for Wi-Fi, VPN, DNS, Email, Exchange, and more
+- **Comprehensive Payload Support**: Support for Wi-Fi, VPN, DNS, Email, Exchange, Web Content Filter, and more
+- **Array Field Management**: Dynamic addition/removal of array items (URLs, server addresses, etc.)
+- **ConsentText Support**: Multi-language consent text for profile installation
 - **Self-contained**: No environment variables required - works out of the box
 - **Cloudflare Pages Ready**: Optimized for deployment on Cloudflare Pages
 - **TypeScript**: Full type safety with strict mode enabled
@@ -14,10 +17,16 @@ A full-stack Remix application for generating Apple mobileconfig configuration p
 
 ## Supported Payload Types
 
-- **Wi-Fi** (`com.apple.wifi.managed`) - Configure Wi-Fi network settings
-- **VPN** (`com.apple.vpn.managed`) - Set up VPN connections
-- **DNS** (`com.apple.dnsProxy.managed`) - Configure DNS settings
-- **Email** (`com.apple.mail.managed`) - Email account configuration
+### Currently Implemented with Full UI Support
+
+- **Wi-Fi** (`com.apple.wifi.managed`) - Configure Wi-Fi network settings with SSID, security, and auto-join options
+- **VPN** (`com.apple.vpn.managed`) - Set up VPN connections with server details and authentication
+- **DNS** (`com.apple.dnsProxy.managed`) - Configure DNS settings with custom server addresses
+- **Web Content Filter** (`com.apple.webcontent-filter`) - Block/allow URLs with built-in content filtering (requires supervision)
+- **Email** (`com.apple.mail.managed`) - Email account configuration with IMAP/SMTP server settings
+
+### Additional Payload Types (Basic Support)
+
 - **Exchange** (`com.apple.eas.managed`) - Microsoft Exchange settings
 - **Web Clip** (`com.apple.webClip.managed`) - Add web apps to home screen
 - **APN** (`com.apple.cellular.managed`) - Cellular data settings
@@ -103,12 +112,25 @@ formData.append(
     PayloadDisplayName: 'My Profile',
     PayloadDescription: 'Description',
     PayloadIdentifier: 'com.example.profile',
+    ConsentText: 'This profile will configure your device settings.',
+    // Or multi-language consent text:
+    // ConsentText: {
+    //   "default": "This profile will configure your device settings.",
+    // },
     PayloadContent: [
       {
-        PayloadType: 'com.apple.wifi.managed',
-        PayloadDisplayName: 'Wi-Fi Network',
-        SSID_STR: 'MyNetwork',
-        AutoJoin: true,
+        PayloadType: 'com.apple.webcontent-filter',
+        PayloadDisplayName: 'Content Filter',
+        PayloadIdentifier: 'com.example.filter',
+        PayloadUUID: 'generated-uuid',
+        PayloadVersion: 1,
+        FilterType: 'BuiltIn',
+        AutoFilterEnabled: false,
+        BlacklistedURLs: [
+          'https://blocked-1.example.com',
+          'https://blocked-2.example.com',
+        ],
+        WhitelistedURLs: ['https://example.com'],
       },
     ],
   }),
@@ -136,15 +158,24 @@ Returns a catalog of supported payload types and their configuration fields.
 {
   "payloadTypes": [
     {
-      "type": "com.apple.wifi.managed",
-      "name": "Wi-Fi",
-      "description": "Configure Wi-Fi network settings",
+      "type": "com.apple.webcontent-filter",
+      "name": "Web Content Filter",
+      "description": "Configure web content filtering (requires supervision)",
       "fields": [
         {
-          "name": "SSID_STR",
+          "name": "FilterType",
           "required": true,
           "type": "string",
-          "description": "Network name"
+          "description": "Filter type (BuiltIn, Plugin)",
+          "defaultValue": "BuiltIn"
+        },
+        {
+          "name": "BlacklistedURLs",
+          "required": false,
+          "type": "array",
+          "description": "URLs to block",
+          "arrayItemType": "string",
+          "defaultValue": []
         }
       ]
     }
@@ -176,10 +207,40 @@ Returns pre-configured profile templates.
 ### Creating a Profile
 
 1. Navigate to the **Builder** page
-2. Configure profile metadata (name, description, identifier)
-3. Add payloads by clicking "Add Payload" and selecting the desired type
-4. Configure each payload's settings
-5. Click "Generate Profile" to download the mobileconfig file
+2. Configure profile metadata:
+   - **Display Name**: The name shown to users
+   - **Description**: Brief description of the profile's purpose
+   - **Identifier**: Unique identifier (reverse domain format)
+   - **ConsentText**: Optional text displayed before installation
+
+3. Add and configure payloads:
+   - Click "Add Payload" and select the desired type
+   - Click "Edit" on any payload to configure detailed settings
+   - For array fields (like URLs), use "+Add" and "Remove" buttons
+   - Set required fields (marked with red asterisk)
+
+4. Click "Generate Profile" to download the mobileconfig file
+
+### Advanced Configuration Examples
+
+#### Web Content Filter
+
+```
+Filter Type: BuiltIn
+Blacklisted URLs:
+  - https://example.com
+Whitelisted URLs:
+  - https://safe-site.example.com
+Auto Filter Enabled: false
+```
+
+#### Wi-Fi Configuration
+
+```
+SSID: MyNetwork
+Hidden Network: false
+Auto Join: true
+```
 
 ### Using Presets
 
