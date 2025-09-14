@@ -2,12 +2,15 @@ import type { MetaFunction } from '@remix-run/cloudflare';
 import type { Payload, PayloadType } from '~/types/base';
 import { useState, useEffect } from 'react';
 import { Link } from '@remix-run/react';
+import { PAGE_CONFIG, generateMetaTags } from '~/utils/seo';
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: 'Profile Builder - Mobile Config Generator' },
-    { name: 'description', content: 'Build custom mobileconfig profiles' },
-  ];
+  return generateMetaTags({
+    title: PAGE_CONFIG.builder.title,
+    description: PAGE_CONFIG.builder.description,
+    keywords: PAGE_CONFIG.builder.keywords,
+    path: PAGE_CONFIG.builder.path,
+  });
 };
 
 export default function Builder() {
