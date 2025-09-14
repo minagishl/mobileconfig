@@ -98,25 +98,25 @@ Generates a mobileconfig file from profile data.
 ```javascript
 const formData = new FormData();
 formData.append(
-	'profile',
-	JSON.stringify({
-		PayloadDisplayName: 'My Profile',
-		PayloadDescription: 'Description',
-		PayloadIdentifier: 'com.example.profile',
-		PayloadContent: [
-			{
-				PayloadType: 'com.apple.wifi.managed',
-				PayloadDisplayName: 'Wi-Fi Network',
-				SSID_STR: 'MyNetwork',
-				AutoJoin: true,
-			},
-		],
-	})
+  'profile',
+  JSON.stringify({
+    PayloadDisplayName: 'My Profile',
+    PayloadDescription: 'Description',
+    PayloadIdentifier: 'com.example.profile',
+    PayloadContent: [
+      {
+        PayloadType: 'com.apple.wifi.managed',
+        PayloadDisplayName: 'Wi-Fi Network',
+        SSID_STR: 'MyNetwork',
+        AutoJoin: true,
+      },
+    ],
+  }),
 );
 
 fetch('/api/generate', {
-	method: 'POST',
-	body: formData,
+  method: 'POST',
+  body: formData,
 });
 ```
 
@@ -134,21 +134,21 @@ Returns a catalog of supported payload types and their configuration fields.
 
 ```json
 {
-	"payloadTypes": [
-		{
-			"type": "com.apple.wifi.managed",
-			"name": "Wi-Fi",
-			"description": "Configure Wi-Fi network settings",
-			"fields": [
-				{
-					"name": "SSID_STR",
-					"required": true,
-					"type": "string",
-					"description": "Network name"
-				}
-			]
-		}
-	]
+  "payloadTypes": [
+    {
+      "type": "com.apple.wifi.managed",
+      "name": "Wi-Fi",
+      "description": "Configure Wi-Fi network settings",
+      "fields": [
+        {
+          "name": "SSID_STR",
+          "required": true,
+          "type": "string",
+          "description": "Network name"
+        }
+      ]
+    }
+  ]
 }
 ```
 

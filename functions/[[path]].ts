@@ -8,6 +8,6 @@ import type { ServerBuild } from '@remix-run/cloudflare';
 import * as build from '../build/server/index.js';
 
 export const onRequest = createPagesFunctionHandler({
-	// Fix the type of the server build file
-	build: build as unknown as ServerBuild,
+  // Fix the type of the server build file
+  build: build as unknown as ServerBuild,
 });
