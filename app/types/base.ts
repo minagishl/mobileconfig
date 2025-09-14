@@ -23,12 +23,12 @@ export interface MobileConfigProfile {
   PayloadType: 'Configuration';
   PayloadUUID: string;
   PayloadVersion: number;
-  ConsentText?: string;
+  ConsentText?: string | { [languageCode: string]: string };
 }
 
 // Payload types will be defined as needed
 export type Payload = BasePayload & {
-  [key: string]: string | boolean | number | undefined;
+  [key: string]: string | boolean | number | string[] | undefined;
 };
 
 export interface Preset {
@@ -47,7 +47,9 @@ export interface PayloadType {
 
 export interface PayloadTypeField {
   name: string;
-  type: string;
+  type: 'string' | 'boolean' | 'number' | 'array' | 'object';
   required: boolean;
   description: string;
+  arrayItemType?: 'string' | 'number';
+  defaultValue?: string | boolean | number | string[];
 }

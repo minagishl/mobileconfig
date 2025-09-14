@@ -70,6 +70,7 @@ export default function Builder() {
     { type: 'com.apple.wifi.managed', name: 'Wi-Fi' },
     { type: 'com.apple.vpn.managed', name: 'VPN' },
     { type: 'com.apple.dnsProxy.managed', name: 'DNS' },
+    { type: 'com.apple.webcontent-filter', name: 'Web Content Filter' },
     { type: 'com.apple.mail.managed', name: 'Email' },
     { type: 'com.apple.webClip.managed', name: 'Web Clip' },
   ];

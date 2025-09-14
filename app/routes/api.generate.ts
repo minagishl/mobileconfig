@@ -107,8 +107,17 @@ function generateMobileConfigResponse(profile: MobileConfigProfile): Response {
     plistData.PayloadScope = profile.PayloadScope;
   }
 
-  if (profile.ConsentText?.trim()) {
-    plistData.ConsentText = profile.ConsentText;
+  if (profile.ConsentText) {
+    if (typeof profile.ConsentText === 'string' && profile.ConsentText.trim()) {
+      plistData.ConsentText = profile.ConsentText;
+    } else if (typeof profile.ConsentText === 'object') {
+      const hasContent = Object.values(profile.ConsentText).some((text) =>
+        text?.trim(),
+      );
+      if (hasContent) {
+        plistData.ConsentText = profile.ConsentText;
+      }
+    }
   }
 
   const xmlContent = serializePlistValue(plistData);
